@@ -17,7 +17,11 @@ router.get("/", async (req, res) => {
   try {
     // use the getProducts from the controller to load it
     const category = req.query.category;
-    const products = await getProducts(category);
+    const page = req.query.page;
+    const per_page = req.query.per_page;
+
+    const products = await getProducts(category, page, per_page);
+
     res.status(200).send(products);
   } catch (error) {
     res.status(400).send({ error: error._message });
@@ -29,9 +33,16 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const product = await getProduct(id);
-    res.status(200).send(product);
+    if (product) {
+      res.status(200).send(product);
+    } else {
+      res.status(400).send("Product not Found");
+    }
   } catch (error) {
-    res.status(400).send({ error: error._message });
+    console.log(error);
+    res.status(400).send({
+      error: error._message,
+    });
   }
 });
 
@@ -88,6 +99,11 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
+
+    // if (!id) {
+    //   return res.status(400).send("Product with requested id was not found");
+    // }
+
     // trigger the deleteProduct function
     await deleteProduct(id);
     res.status(200).send({

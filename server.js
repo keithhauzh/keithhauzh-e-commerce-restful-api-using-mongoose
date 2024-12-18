@@ -1,6 +1,9 @@
 // import express
 const express = require("express");
 
+// import cors
+const cors = require("cors");
+
 // import mongoose
 const mongoose = require("mongoose");
 
@@ -9,6 +12,9 @@ const app = express();
 
 // middleware to handle JSON request (body)
 app.use(express.json());
+
+// setup cors policy
+app.use(cors());
 
 // connect to MongoDB
 mongoose
