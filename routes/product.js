@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 
     res.status(200).send(products);
   } catch (error) {
-    res.status(400).send({ error: error._message });
+    res.status(400).send({ error: error.message });
   }
 });
 
@@ -41,7 +41,7 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send({
-      error: error._message,
+      error: error.message,
     });
   }
 });
@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
     const newProduct = await addNewProduct(name, description, price, category);
     res.status(200).send(newProduct);
   } catch (error) {
-    res.status(400).send({ error: error._message });
+    res.status(400).send({ error: error.message });
   }
 });
 
@@ -90,7 +90,7 @@ router.put("/:id", async (req, res) => {
     res.status(200).send(updatedProduct);
   } catch (error) {
     res.status(400).send({
-      error: error._message,
+      error: error.message,
     });
   }
 });
@@ -111,7 +111,7 @@ router.delete("/:id", async (req, res) => {
     });
   } catch (error) {
     res.status(400).send({
-      error: error._message,
+      error: error.message,
     });
   }
 });

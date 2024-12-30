@@ -1,3 +1,6 @@
+// dotenv
+require("dotenv").config();
+
 // import express
 const express = require("express");
 
@@ -35,10 +38,14 @@ app.get("/", (req, res) => {
 // import all the routes
 const productRouter = require("./routes/product");
 const categoryRouter = require("./routes/category");
+const orderRouter = require("./routes/order");
+const paymentRouter = require("./routes/payment");
 
 // define urls for routers
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
+app.use("/orders", orderRouter);
+app.use("/payment", paymentRouter);
 
 // start the server
 app.listen(5554, () => {
