@@ -40,12 +40,14 @@ const productRouter = require("./routes/product");
 const categoryRouter = require("./routes/category");
 const orderRouter = require("./routes/order");
 const paymentRouter = require("./routes/payment");
+const userRouter = require("./routes/user");
 
 // define urls for routers
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/orders", orderRouter);
 app.use("/payment", paymentRouter);
+app.use("/auth", userRouter);
 
 // start the server
 app.listen(5554, () => {
