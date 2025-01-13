@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
     // loginn user via login function
     const user = await login(email, password);
 
-    // send back the user data
+  // send back the user data
     res.status(200).send(user);
   } catch (error) {
     res.status(400).send({ error: error.message });
@@ -41,8 +41,9 @@ router.post("/signup", async (req, res) => {
     // send back the newly created user data
     res.status(200).send(user);
   } catch (error) {
+    console.log(error);
     res.status(400).send({
-      error: error._message,
+      error: error.message,
     });
   }
 });

@@ -7,6 +7,11 @@ const jwt = require("jsonwebtoken");
 // import bcrypt library for hashing password
 const bcrypt = require("bcrypt");
 
+// get user by email
+async function getUserByEmail(email) {
+  return await User.findOne({ email });
+}
+
 // function for generating a JWT token
 function generateJWTtoken(_id, name, email, role) {
   return jwt.sign(
@@ -90,4 +95,4 @@ const signup = async (name, email, password) => {
   };
 };
 
-module.exports = { login, signup };
+module.exports = { login, signup, getUserByEmail };

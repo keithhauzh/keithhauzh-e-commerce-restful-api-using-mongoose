@@ -6,7 +6,12 @@ const productSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: false },
   price: { type: Number, required: true },
-  category: { type: String, required: true },
+  // linkage between the products and categories (Similar to SQL foreign key)
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+  },
+  image: String,
 });
 
 // convver the schemam to a model

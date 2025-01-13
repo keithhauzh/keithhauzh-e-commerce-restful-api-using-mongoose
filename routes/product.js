@@ -2,7 +2,10 @@ const express = require("express");
 // create a routuer for products
 const router = express.Router();
 
-// import functions from controller
+// authentication middleware
+const { isAdmin } = require("../middleware/auth");
+
+// import functions from product controller
 const {
   getProducts,
   getProduct,
@@ -47,12 +50,13 @@ router.get("/:id", async (req, res) => {
 });
 
 // add product
-router.post("/", async (req, res) => {
+router.post("/", isAdmin, async (req, res) => {
   try {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
     const category = req.body.category;
+    const image = req.body.image;
 
     // check for error
     if (!name || !description || !price || !category) {
@@ -62,7 +66,7 @@ router.post("/", async (req, res) => {
     }
 
     // pass in all the data to addNewProduct functiion
-    const newProduct = await addNewProduct(name, description, price, category);
+    const newProduct = await addNewProduct(name, description, price, category, image);
     res.status(200).send(newProduct);
   } catch (error) {
     res.status(400).send({ error: error.message });
@@ -70,7 +74,7 @@ router.post("/", async (req, res) => {
 });
 
 // update product
-router.put("/:id", async (req, res) => {
+router.put("/:id", isAdmin, async (req, res) => {
   try {
     const id = req.params.id;
     const name = req.body.name;
@@ -96,7 +100,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete product
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isAdmin, async (req, res) => {
   try {
     const id = req.params.id;
 

@@ -6,8 +6,12 @@ const Order = require("../models/order");
 const Product = require("../models/product");
 
 // get all the orders
-const getOrders = async () => {
-  const orders = await Order.find();
+const getOrders = async (email, role) => {
+  let filter = {};
+  if (role !== "admin") {
+    filter.customerEmail = email;
+  }
+  const orders = await Order.find(filter).sort({ _id: -1 });
   return orders;
 };
 

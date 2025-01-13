@@ -3,6 +3,9 @@ const express = require("express");
 // set up the order router
 const router = express.Router();
 
+// authentication middleware
+const { isValidUser, isAdmin } = require("../middleware/auth");
+
 // import all the order functions
 const {
   getOrders,
@@ -21,7 +24,7 @@ const {
 */
 
 // create new order
-router.post("/", async (req, res) => {
+router.post("/", isValidUser, async (req, res) => {
   try {
     // get data
     const {
@@ -50,13 +53,17 @@ router.post("/", async (req, res) => {
 });
 
 // get orders
-router.get("/", async (req, res) => {
+router.get("/", isValidUser, async (req, res) => {
   try {
+    // check middleware, code responsible for user data being passed down to request is there
+    const email = req.user.email;
+    const role = req.user.role;
     // trigger function from controller
-    const orders = await getOrders();
+    const orders = await getOrders(email, role);
     // send
     res.status(200).send(orders);
   } catch (error) {
+    console.log(error);
     res.status(400).send({
       error: error._message,
     });
@@ -64,7 +71,7 @@ router.get("/", async (req, res) => {
 });
 
 // update orders
-router.put("/:id", async (req, res) => {
+router.put("/:id", isAdmin, async (req, res) => {
   try {
     const id = req.params.id;
     const orderStatus = req.body.status;
@@ -81,7 +88,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isAdmin, async (req, res) => {
   try {
     const id = req.params.id;
 
