@@ -20,11 +20,11 @@ app.use(express.json());
 app.use(cors());
 
 // set a folder as a static path
-app.use("/uploads", express.static("uploads"));
+app.use("/api/uploads", express.static("uploads"));
 
 // connect to MongoDB
 mongoose
-  .connect("mongodb://localhost:27017/ecommerce")
+  .connect(process.env.MONGODB_URL + "/ecommerce")
   .then(() => {
     // if mongodbb is successfully connected
     console.log("MongoDB is connected");
@@ -34,7 +34,7 @@ mongoose
   });
 
 // root route
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Happy Coding!");
 });
 
@@ -47,14 +47,14 @@ const userRouter = require("./routes/user");
 const imageRouter = require("./routes/image");
 
 // define urls for routers
-app.use("/products", productRouter);
-app.use("/categories", categoryRouter);
-app.use("/orders", orderRouter);
-app.use("/payment", paymentRouter);
-app.use("/auth", userRouter);
-app.use("/image", imageRouter);
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/payment", paymentRouter);
+app.use("/api/auth", userRouter);
+app.use("/api/image", imageRouter);
 
 // start the server
-app.listen(5554, () => {
-  console.log("Server is running at http://localhost:5554");
+app.listen(5555, () => {
+  console.log("Server is running at http://localhost:5555");
 });
