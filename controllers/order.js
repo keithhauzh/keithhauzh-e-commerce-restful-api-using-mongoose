@@ -35,8 +35,8 @@ const addNewOrder = async (
       email: customerEmail,
       // parseFloat will convert string to float number
       amount: parseFloat(totalPrices) * 100,
-      callback_url: "http://localhost:3000/verify-payment",
-      redirect_url: "http://localhost:3000/verify-payment",
+      callback_url: process.env.FRONTEND_URL + "/verify-payment",
+      redirect_url: process.env.FRONTEND_URL + "/verify-payment",
     },
     {
       auth: {
